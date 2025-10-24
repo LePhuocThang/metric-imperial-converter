@@ -15,20 +15,17 @@ module.exports = function (app) {
       let returnNum;
       let returnUnit;
 
+      // Handle all error cases first with exact text responses
       if (initNum === 'invalid number' && initUnit === 'invalid unit') {
-        // per FCC grader expectations, return plain text for errors
-        res.type('text').send('invalid number and unit');
-        return;
+        return res.type('text/plain').send('invalid number and unit');
       }
 
       if (initNum === 'invalid number') {
-        res.type('text').send('invalid number');
-        return;
+        return res.type('text/plain').send('invalid number');
       }
 
       if (initUnit === 'invalid unit') {
-        res.type('text').send('invalid unit');
-        return;
+        return res.type('text/plain').send('invalid unit');
       }
 
       returnNum = convertHandler.convert(initNum, initUnit);
@@ -36,17 +33,12 @@ module.exports = function (app) {
       
       let string = convertHandler.getString(initNum, initUnit, returnNum, returnUnit);
       
-      // Format units for output: per spec, return units in lowercase except liter should be uppercase 'L'
-      const formatUnitOut = (u) => {
-        if (!u || u === 'invalid unit') return u;
-        return u.toLowerCase() === 'l' ? 'L' : u.toLowerCase();
-      };
-
+      // Send JSON response with exact field order and formatting
       res.json({
         initNum: initNum,
-        initUnit: formatUnitOut(initUnit),
+        initUnit: initUnit,
         returnNum: returnNum,
-        returnUnit: formatUnitOut(returnUnit),
+        returnUnit: returnUnit,
         string: string
       });
     });

@@ -46,15 +46,17 @@ function ConvertHandler() {
 
     if (!validUnits.includes(unitLower)) return 'invalid unit';
 
-  return unitLower;
+    // FCC expects 'L' for liter in responses
+    return unitLower === 'l' ? 'L' : unitLower;
   };
   
   this.getReturnUnit = function(initUnit) {
     // normalize to lowercase for mapping
     const mapKey = initUnit.toLowerCase();
     const unitMap = {
-      'gal': 'l',
+      'gal': 'L',
       'l': 'gal',
+      'L': 'gal',
       'mi': 'km',
       'km': 'mi',
       'lbs': 'kg',
@@ -68,6 +70,7 @@ function ConvertHandler() {
     const unitNames = {
       'gal': 'gallons',
       'l': 'liters',
+      'L': 'liters',
       'mi': 'miles',
       'km': 'kilometers',
       'lbs': 'pounds',
