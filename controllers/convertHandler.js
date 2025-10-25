@@ -54,7 +54,7 @@ function ConvertHandler() {
     // normalize to lowercase for mapping
     const mapKey = initUnit.toLowerCase();
     const unitMap = {
-      'gal': 'L',
+      'gal': 'l',
       'l': 'gal',
       'L': 'gal',
       'mi': 'km',
