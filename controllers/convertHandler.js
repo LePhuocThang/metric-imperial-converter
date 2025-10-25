@@ -46,8 +46,8 @@ function ConvertHandler() {
 
     if (!validUnits.includes(unitLower)) return 'invalid unit';
 
-    // FCC expects 'L' for liter in responses
-    return unitLower === 'l' ? 'L' : unitLower;
+    // Return unit as-is for unit tests, but convert to 'L' for API responses
+    return unitLower;
   };
   
   this.getReturnUnit = function(initUnit) {

@@ -31,14 +31,18 @@ module.exports = function (app) {
       returnNum = convertHandler.convert(initNum, initUnit);
       returnUnit = convertHandler.getReturnUnit(initUnit);
       
-      let string = convertHandler.getString(initNum, initUnit, returnNum, returnUnit);
+      // Convert 'l' to 'L' for API responses (FCC requirement)
+      let displayInitUnit = initUnit === 'l' ? 'L' : initUnit;
+      let displayReturnUnit = returnUnit === 'l' ? 'L' : returnUnit;
+      
+      let string = convertHandler.getString(initNum, displayInitUnit, returnNum, displayReturnUnit);
       
       // Send JSON response with exact field order and formatting
       res.json({
         initNum: initNum,
-        initUnit: initUnit,
+        initUnit: displayInitUnit,
         returnNum: returnNum,
-        returnUnit: returnUnit,
+        returnUnit: displayReturnUnit,
         string: string
       });
     });
